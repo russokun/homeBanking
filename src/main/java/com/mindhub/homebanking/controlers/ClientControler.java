@@ -16,12 +16,12 @@ public class ClientControler {
   ClientRepository clientRepository;
 
   @GetMapping("/hello")
-  public String helloClients() {
-    return "Hello World from API!";
+  public String getClients() {
+    return "Hello Clients from API!";
   }
 
   @GetMapping("/")
-  public List <Client> clientsList() {
+  public List <Client> getAllClients() {
     return clientRepository.findAll();
   }
 }
