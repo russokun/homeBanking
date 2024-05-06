@@ -1,8 +1,6 @@
 package com.mindhub.homebanking.models;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -10,9 +8,14 @@ public class Account {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  String number;
-  LocalDate creationDate;
-  double balance;
+  private String number;
+  private LocalDate creationDate;
+  private Double balance;
+
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name="clientId")
+  private Client client;
+
 
   public Account() {
   }
@@ -52,6 +55,14 @@ public class Account {
   }
   public Long getId() {
     return id;
+  }
+
+  public Client getClient() {
+    return client;
+  }
+
+  public void setClient(Client client) {
+    this.client = client;
   }
 
   @Override

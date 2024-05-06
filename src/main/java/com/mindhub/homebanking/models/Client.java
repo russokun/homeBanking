@@ -1,9 +1,10 @@
 package com.mindhub.homebanking.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Client {
@@ -11,9 +12,9 @@ public class Client {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String firstName;
-  private String lastName;
-  private String email;
+  private String firstName, lastName, email;
+  @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+  private Set<Account> accounts = new HashSet<>();
 
   public Client() {
   }
@@ -52,8 +53,13 @@ public class Client {
     this.email = email;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public Set<Account> getAccounts() {
+    return accounts;
+  }
+
+  public void addAccount(Account account) {
+    account.setClient(this);
+    accounts.add(account);
   }
 
   @Override
@@ -63,6 +69,7 @@ public class Client {
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
+            ", accounts='" +accounts  + '\'' +
             '}';
   }
 }

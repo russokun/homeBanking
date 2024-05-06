@@ -20,18 +20,19 @@ public class HomebankingApplication {
 		return (args) -> {
 			Client client1 = new Client("John", "Doe", "jhondoe13@hotmail.com");
 			Client client2 = new Client("Melba", "Morel", "melmorel@hotmail.com");
-			Client client3 = new Client("Alice", "Smith", "aliceSmithh4@gmail.com");
-			clientRepository.save(client1);
-			clientRepository.save(client2);
-			clientRepository.save(client3);
 			LocalDate ayer = LocalDate.now().minusDays(1);
 			LocalDate hoy = LocalDate.now();
 			Account account1 = new Account("VIN001", ayer, 5000);
 			Account account2 = new Account("VIN002", hoy, 7500);
+			Account account3 = new Account("JHD001", hoy, 10000);
+			client2.addAccount(account1);
+			client2.addAccount(account2);
+			client1.addAccount(account3);
+			clientRepository.save(client1);
+			clientRepository.save(client2);
 			accountRepository.save(account1);
 			accountRepository.save(account2);
-			System.out.println(account1);
-			System.out.println(account2);
+			accountRepository.save(account3);
 		};
 	}
 }
