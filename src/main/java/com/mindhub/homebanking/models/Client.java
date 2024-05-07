@@ -1,18 +1,19 @@
 package com.mindhub.homebanking.models;
-
 import jakarta.persistence.*;
-import org.springframework.data.annotation.Id;
-
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Client {
-  @jakarta.persistence.Id
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String firstName, lastName, email;
+
+  private String firstName;
+  private String lastName;
+  private String email;
+
   @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
   private Set<Account> accounts = new HashSet<>();
 

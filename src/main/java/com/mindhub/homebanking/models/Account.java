@@ -1,15 +1,16 @@
 package com.mindhub.homebanking.models;
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Account {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
   private String number;
   private LocalDate creationDate;
   private Double balance;
@@ -20,6 +21,7 @@ public class Account {
 
   @OneToMany(mappedBy = "clientAccount", fetch = FetchType.EAGER)
   private Set<Transaction> transactions = new HashSet<>();
+
   public Account() {
   }
 
