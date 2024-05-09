@@ -1,4 +1,5 @@
 package com.mindhub.homebanking.models;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,10 @@ public class Client {
 
   @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
   private Set<Account> accounts = new HashSet<>();
+
+  @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+  @JsonManagedReference
+  private Set<ClientLoans> clientLoans = new HashSet<>();
 
   public Client() {
   }
@@ -52,6 +57,19 @@ public class Client {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public Set<ClientLoans> getClientLoans() {
+    return clientLoans;
+  }
+
+  public void setClientLoans(Set<ClientLoans> clientLoans) {
+    this.clientLoans = clientLoans;
+  }
+
+  public void addClientLoans(ClientLoans clientLoan) {
+    clientLoan.setClient(this);
+    this.clientLoans.add(clientLoan);
   }
 
   public Set<Account> getAccounts() {
