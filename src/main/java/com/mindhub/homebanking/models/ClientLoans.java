@@ -14,11 +14,9 @@ public class ClientLoans {
   private double amount;
 
   @ManyToOne
-  @JsonManagedReference
   private Client client;
 
   @ManyToOne
-  @JsonManagedReference
   private Loans loans;
 
   public ClientLoans() {

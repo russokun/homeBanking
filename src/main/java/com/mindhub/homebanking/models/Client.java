@@ -19,7 +19,6 @@ public class Client {
   private Set<Account> accounts = new HashSet<>();
 
   @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
-  @JsonManagedReference
   private Set<ClientLoans> clientLoans = new HashSet<>();
 
   public Client() {
