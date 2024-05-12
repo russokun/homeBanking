@@ -16,7 +16,7 @@ public class HomebankingApplication {
 
 	public static void main(String[] args) {SpringApplication.run(HomebankingApplication.class, args);}
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoansRepository loansRepository, ClientLoansRepository clientLoansRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoansRepository loansRepository, ClientLoansRepository clientLoansRepository, CardRepository cardRepository) {
 		return (args) -> {
 			Client client1 = new Client("John", "Doe", "jhondoe13@hotmail.com");
 			Client client2 = new Client("Melba", "Morel", "melmorel@hotmail.com");
@@ -41,6 +41,14 @@ public class HomebankingApplication {
 			ClientLoans clientLoans1 = new ClientLoans(12,500000 );
 			ClientLoans clientLoans2 = new ClientLoans(24,1000000 );
 			ClientLoans clientLoans3 = new ClientLoans(36,1500000 );
+
+			Card card1 = new Card(CardColor.TITANIUM, CardType.DEBIT, "4212-9050-5040-1898", LocalDate.now(), LocalDate.now().plusYears(5), 898);
+			Card card2 = new Card(CardColor.SILVER, CardType.CREDIT, "4212-9050-5040-1899", LocalDate.now().plusDays(1), LocalDate.now().plusYears(5), 899);
+			Card card3 = new Card(CardColor.GOLD, CardType.DEBIT, "4212-9050-5040-1900", LocalDate.now(), LocalDate.now().plusYears(5), 900);
+
+			client2.addCard(card1);
+			client2.addCard(card2);
+			client1.addCard(card3);
 
 			loan1.addClientLoans(clientLoans1);
 			client1.addClientLoans(clientLoans1);
@@ -68,6 +76,9 @@ public class HomebankingApplication {
 			clientLoansRepository.save(clientLoans1);
 			clientLoansRepository.save(clientLoans2);
 			clientLoansRepository.save(clientLoans3);
+			cardRepository.save(card1);
+			cardRepository.save(card2);
+			cardRepository.save(card3);
 
 			System.out.println(client1);
 			System.out.println(client2);
