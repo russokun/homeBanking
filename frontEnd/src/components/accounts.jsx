@@ -3,23 +3,60 @@ import Carousel from './carousel';
 import axios from 'axios';
 
 const Accounts = () => {
+  
   const [data, setData] = useState([]);
+  const [token, setToken] = useState(null);
+
+  // Autenticación
   useEffect(() => {
-    axios.get('http://localhost:8080/api/clients/')
+    axios.post('http://localhost:8080/api/auth/login', {
+      email: "melmorel@hotmail.com",
+      password: "melmorel123"
+    })
+    .then(response => {
+      // Guarda el token en el estado de la aplicación
+      setToken(response.data);
+    })
+    .catch(error => {
+      console.error('Error al autenticar:', error);
+    });
+  }, []);
+
+  // Obtención de los datos
+  useEffect(() => {
+    if (token) {
+      axios.get('http://localhost:8080/api/auth/current', {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
       .then(response => {
         setData(response.data);
         console.log(response.data);
       })
-      .catch(error => console.log(error));
-  }, []);
+      .catch(error => {
+        console.error('Error al obtener los clientes:', error);
+      });
+    }
+  }, [token]);  // Dependencia del token
 
-  const melba = data[1];
+  const melba = data;
   console.log(melba);
 
   const [selectedAccount, setSelectedAccount] = useState(null);
 
+  useEffect(() => {
+    
+    return () => {
+      console.log("ando desmontandome")
+      
+    }
+  },[])
+
   return (
+    
     <div className='w-full h-[80vh] bg-slate-200'>
+      
       <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3'>
         Welcome, {melba ? melba.firstName : 'loading'}!
       </h1>

@@ -2,20 +2,53 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 const Cards = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null);
+  const [token, setToken] = useState(null);
+  const [error, setError] = useState(null);
+
+  // Autenticación
   useEffect(() => {
-    axios.get('http://localhost:8080/api/clients/')
-      .then(response => {
-        setData(response.data);
-        console.log(response.data);
-      })
-      .catch(error => console.log(error));
+    axios.post('http://localhost:8080/api/auth/login', {
+      email: "melmorel@hotmail.com",
+      password: "melmorel123"
+    })
+    .then(response => {
+      setToken(response.data);
+    })
+    .catch(error => {
+      console.error('Error al autenticar:', error);
+      setError('Error al autenticar');
+    });
   }, []);
 
-  const melba = data[1];
-  console.log(melba);
+  // Obtención de los datos
+  useEffect(() => {
+    if (token) {
+      axios.get('http://localhost:8080/api/auth/current', {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
+      .then(response => {
+        setData(response.data);
+      })
+      .catch(error => {
+        console.error('Error al obtener los clientes:', error);
+        setError('Error al obtener los clientes');
+      });
+    }
+  }, [token]);
 
-  const melbaCreditCards = melba ? melba.cards.filter(card => card.type === 'CREDIT' && card.cardHolder === 'Melba Morel') : [];
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  const melbaCreditCards = data.cards?.filter(card => card.type === 'CREDIT' && card.cardHolder === 'Melba Morel') || [];
+  const melbaDebitCards = data.cards?.filter(card => card.type === 'DEBIT' && card.cardHolder === 'Melba Morel') || [];
   const creditCards = melbaCreditCards.map(card => (
     <div className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg mb-5">
       <p className="text-2xl font-medium">{card.number}</p>
@@ -32,7 +65,7 @@ const Cards = () => {
       </div>
     </div>
   ));
-  const melbaDebitCards = melba ? melba.cards.filter(card => card.type === 'DEBIT' && card.cardHolder === 'Melba Morel') : [];
+
   const debitCards = melbaDebitCards.map(card => (
     <div className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg">
       <p className="text-2xl font-medium">{card.number}</p>

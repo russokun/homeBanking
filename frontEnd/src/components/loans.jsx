@@ -4,16 +4,42 @@ import { Link } from 'react-router-dom';
 
 const Loans = () => {
   const [data, setData] = useState([]);
+  const [token, setToken] = useState(null);
+
+  // Autenticación
   useEffect(() => {
-    axios.get('http://localhost:8080/api/clients/')
+    axios.post('http://localhost:8080/api/auth/login', {
+      email: "melmorel@hotmail.com",
+      password: "melmorel123"
+    })
+    .then(response => {
+      // Guarda el token en el estado de la aplicación
+      setToken(response.data);
+    })
+    .catch(error => {
+      console.error('Error al autenticar:', error);
+    });
+  }, []);
+
+  // Obtención de los datos
+  useEffect(() => {
+    if (token) {
+      axios.get('http://localhost:8080/api/auth/current', {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      })
       .then(response => {
         setData(response.data);
         console.log(response.data);
       })
-      .catch(error => console.log(error));
-  }, []);
+      .catch(error => {
+        console.error('Error al obtener los clientes:', error);
+      });
+    }
+  }, [token]);  // Dependencia del token
 
-  const melba = data[1];
+  const melba = data;
   console.log(melba);
 
   return (

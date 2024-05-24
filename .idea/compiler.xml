@@ -3,8 +3,6 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
       <module name="homebanking" target="17" />
-      <module name="homebanking.main" target="17" />
-      <module name="homebanking.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>

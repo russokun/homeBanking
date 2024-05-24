@@ -2,7 +2,7 @@ import React from 'react';
 
 const RequestLoan = () => {
   return (
-    <body className="bg-slate-200 flex flex-col items-center min-h-max md:h-[80vh]">
+    <div className="bg-slate-200 flex flex-col items-center min-h-max md:h-[80vh]">
 
     <h1 className="font-extrabold text-3xl pt-5 mb-5">Apply for a Loan</h1>
   
@@ -46,7 +46,7 @@ const RequestLoan = () => {
       </div>
     </div>
   
-  </body>
+  </div>
   );
 };
 
