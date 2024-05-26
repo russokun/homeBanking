@@ -4,10 +4,12 @@ package com.mindhub.homebanking.controlers;
 import com.mindhub.homebanking.dtos.ClientDto;
 import com.mindhub.homebanking.dtos.LoginDto;
 import com.mindhub.homebanking.dtos.RegisterDto;
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.servicesSecurity.JwtUtilService;
+import com.mindhub.homebanking.utils.AccountNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -64,7 +68,16 @@ public class AuthControler {
       registerDto.lastName(), registerDto.email(),
       passwordEncoder.encode(registerDto.password()));
     clientRepository.save(client);
-    return new ResponseEntity<>("Client created",HttpStatus.CREATED);
+
+    Account newAccount = new Account();
+    newAccount.setNumber(AccountNumberGenerator.generate());
+    newAccount.setBalance(0);
+    newAccount.setClient(client);
+    newAccount.setCreationDate(LocalDate.now()); // Set the creation date to the current date
+    accountRepository.save(newAccount);
+
+    return new ResponseEntity<>("Client and account created",HttpStatus.CREATED);
+
   }
 
   @GetMapping("/current")
