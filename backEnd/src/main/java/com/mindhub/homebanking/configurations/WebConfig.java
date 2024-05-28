@@ -28,33 +28,33 @@ public class WebConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
     httpSecurity
-            .cors(cors -> cors.configurationSource(corsConfigurationSource))
+            .cors(cors -> cors.configurationSource(corsConfigurationSource)) //metemos la configuracion cors hecha
             .csrf(AbstractHttpConfigurer::disable)
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
 
             .headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(
-                    HeadersConfigurer.FrameOptionsConfig::disable))
+                    HeadersConfigurer.FrameOptionsConfig::disable))//para que se pueda acceder a la consola de h2
 
             .authorizeHttpRequests(authorize ->
                     authorize
                             .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**").permitAll()
-                            .anyRequest().authenticated()
+                            .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
             )
 
-            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)//agregamos el filtro antes de la autenticacion
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));//trabajamos sin sesiones, si no con tokens
 
     return httpSecurity.build();
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() {
+  public PasswordEncoder passwordEncoder() { //encriptacion de contraseñas
     return new BCryptPasswordEncoder();
   }
 
   @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception { //gestion de autenticacion
     return authenticationConfiguration.getAuthenticationManager();
   }
 }

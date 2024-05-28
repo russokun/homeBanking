@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api/clients")
 public class AccountControler {
 
   @Autowired
@@ -27,7 +27,7 @@ public class AccountControler {
   @Autowired
   private ClientRepository clientRepository;
 
-  @GetMapping("/")
+  @GetMapping("/current/accounts")
   public ResponseEntity<?> getAccounts(Authentication authentication) {
     Client client = clientRepository.findByEmail(authentication.getName());
     List<Account> accountsList = accountRepository.findByClient(client);
@@ -40,7 +40,7 @@ public class AccountControler {
     }
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/accounts/{id}")
   public ResponseEntity<?> getAccountById(@PathVariable Long id) {
     Optional<Account> optionalAccount = accountRepository.findById(id);
     if (optionalAccount.isPresent()) {

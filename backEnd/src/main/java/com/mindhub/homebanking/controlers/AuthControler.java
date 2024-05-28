@@ -46,11 +46,11 @@ public class AuthControler {
   private JwtUtilService jwtUtilService;
 
   @PostMapping("/login")
-  public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+  public ResponseEntity<?> login(@RequestBody LoginDto loginDto) { //para vincular el cuerpo de una solicitud HTTP entrante a un objeto en un controlador.
     try {
-      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password()));
-      final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDto.email());
-      final String jwt = jwtUtilService.generateToken(userDetails);
+      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.email(), loginDto.password()));//autenticamos el usuario y contraseña
+      final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDto.email());//cargamos los datos del usuario en memoria para token
+      final String jwt = jwtUtilService.generateToken(userDetails); //generacion de token
       return ResponseEntity.ok(jwt);
     } catch (Exception e) {
       return new ResponseEntity<>("Email or password invalid", HttpStatus.BAD_REQUEST);
