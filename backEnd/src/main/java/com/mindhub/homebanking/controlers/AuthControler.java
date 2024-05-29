@@ -62,6 +62,18 @@ public class AuthControler {
     if(registerDto.firstName().isBlank()){
       return new ResponseEntity<>("First name is required", HttpStatus.FORBIDDEN);
     }
+    if(registerDto.lastName().isBlank()){
+      return new ResponseEntity<>("Last name is required", HttpStatus.FORBIDDEN);
+    }
+    if(registerDto.email().isBlank()){
+      return new ResponseEntity<>("Email is required", HttpStatus.FORBIDDEN);
+    }
+    if(registerDto.password().isBlank()){
+      return new ResponseEntity<>("Password is required", HttpStatus.FORBIDDEN);
+    }
+    if(clientRepository.findByEmail(registerDto.email()) != null){
+      return new ResponseEntity<>("Email already exists", HttpStatus.FORBIDDEN);
+    }
 
     Client client = new Client(
       registerDto.firstName(),

@@ -64,4 +64,4 @@ public class CardControler {
     Random random = new Random();
     return random.nextInt(900) + 100; // Esto generará un número aleatorio de 3 dígitos
   }
-}
+} // FALTA GET MAPPING PARA OBTENER TODAS LAS TARJETAS DE UN CLIENTE
