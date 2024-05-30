@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/clients")
@@ -64,4 +63,21 @@ public class CardControler {
     Random random = new Random();
     return random.nextInt(900) + 100; // Esto generará un número aleatorio de 3 dígitos
   }
-} // FALTA GET MAPPING PARA OBTENER TODAS LAS TARJETAS DE UN CLIENTE
+
+  @GetMapping("/current/cards")
+  public ResponseEntity<?> getCardsForAuthenticatedClient(Authentication authentication) {
+    // Obtener el cliente actualmente autenticado
+    Client client = clientRepository.findByEmail(authentication.getName());
+
+    // Obtener las tarjetas del cliente
+    Set<Card> cards = client.getCards();
+
+    // Verificar si el cliente tiene tarjetas
+    if (cards.isEmpty()) {
+      return new ResponseEntity<>("No cards found for authenticated client", HttpStatus.OK);
+    }
+
+    // Devolver las tarjetas
+    return new ResponseEntity<>(cards, HttpStatus.OK);
+  }
+}
