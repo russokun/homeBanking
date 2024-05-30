@@ -6,11 +6,13 @@ import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.utils.MissingParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -30,10 +32,14 @@ public class TransactionControler {
 
   @Transactional
   @PostMapping
-  public ResponseEntity<?> createTransaction(@RequestBody TransferDto transferDto, Authentication authentication) {
+  public ResponseEntity<?> createTransaction(@RequestBody TransferDto transferDto, Authentication authentication) throws MethodArgumentNotValidException {
     // Verificar que los parámetros no estén vacíos
-    if (transferDto.getAmount() == null || transferDto.getDescription() == null || transferDto.getSourceAccountNumber() == null || transferDto.getDestinationAccountNumber() == null) {
-      return new ResponseEntity<>("Missing parameters", HttpStatus.BAD_REQUEST);
+    if (transferDto.getAmount() == null || transferDto.getDescription() == null || transferDto.getDescription().trim().isEmpty()) {
+      throw new MissingParameterException("Invalid or missing parameters");
+    }
+
+    if (transferDto.getAmount() <= 0) {
+      return new ResponseEntity<>("Amount must be greater than zero", HttpStatus.BAD_REQUEST);
     }
 
     // Verificar que los números de cuenta no sean los mismos
