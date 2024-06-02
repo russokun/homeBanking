@@ -1,6 +1,7 @@
 // src/main/java/com/mindhub/homebanking/services/implement/LoanServiceImpl.java
 package com.mindhub.homebanking.services.implement;
 
+import com.mindhub.homebanking.dtos.ClientLoansDto;
 import com.mindhub.homebanking.dtos.LoanApplicationDto;
 import com.mindhub.homebanking.dtos.LoansDto;
 import com.mindhub.homebanking.models.Loans;
@@ -54,22 +55,36 @@ public class LoanServiceImpl implements LoanService {
 
   @Transactional
   @Override
-  public void createClientLoan(String username, Loans loan, double amount, int installments,LoanApplicationDto loanApplicationDto) {
+  public ClientLoansDto createClientLoan(String username, Loans loan, double amount, int installments,LoanApplicationDto loanApplicationDto) {
     String accountNumber = loanApplicationDto.getDestinationAccountNumber();
     Account account = accountRepository.findByNumber(accountNumber);
     if (account != null) {
       ClientLoans clientLoan = new ClientLoans();
       clientLoan.setLoans(loan);
-      clientLoan.setAmount(amount + amount * 0.2); // tasa d intere
+
+      // Calculate interest based on number of installments
+      double interestRate;
+      if (installments < 12) {
+        interestRate = 0.15;
+      } else if (installments > 12) {
+        interestRate = 0.25;
+      } else {
+        interestRate = 0.20;
+      }
+
+      double totalAmount = amount + amount * interestRate;
+      clientLoan.setAmount(totalAmount);
       clientLoan.setPayments(installments);
       clientLoan.setClient(account.getClient());
       clientLoanService.save(clientLoan);
 
+      // Create and return ClientLoansDto
+      return new ClientLoansDto(clientLoan);
     }
-     else {
+    else {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Account not found");
     }
-    }
+  }
 
 
   @Override

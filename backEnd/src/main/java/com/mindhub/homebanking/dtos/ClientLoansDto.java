@@ -12,12 +12,16 @@ public class ClientLoansDto {
 
   private double amount;
 
+  private double totalAmount; // new
+
   public ClientLoansDto(ClientLoans clientLoans) {
     this.id = clientLoans.getId();
     this.loanId = clientLoans.getLoans().getId();
     this.loanName = clientLoans.getLoans().getName();
     this.payments = clientLoans.getPayments();
     this.amount = clientLoans.getAmount();
+    this.totalAmount = totalAmount;
+
   }
 
   public long getId() {
@@ -39,4 +43,9 @@ public class ClientLoansDto {
   public double getAmount() {
     return amount;
   }
+
+  public double getTotalAmount() {return totalAmount;
+  }
+
+
 }
