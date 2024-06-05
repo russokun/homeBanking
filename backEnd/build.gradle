@@ -14,11 +14,14 @@ java {
 repositories {
 	mavenCentral()
 }
-
+//GRADLE GESTOR DE DEPENDENCIAS, DESCARGA LAS NECESARIAS PARA EL PROYECTO
+//SPRINGBOOT CONFIGURA LAS DEPENDENCIAS PARA QUE SEAN TRABAJADAS
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	runtimeOnly 'com.h2database:h2'
+	//runtimeOnly 'com.h2database:h2'
+	implementation 'org.postgresql:postgresql'
+	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
