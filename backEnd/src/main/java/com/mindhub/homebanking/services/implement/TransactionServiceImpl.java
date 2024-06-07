@@ -20,6 +20,5 @@ public class TransactionServiceImpl implements TransactionService {
     transactionRepository.save(transaction);
   }
 
- // @Override
-  //public void createAndSaveTransaction(String description, double amount, TransactionType type, Account account) {Transaction transaction = new Transaction(description, amount, type, account);save(transaction)}
+
 }

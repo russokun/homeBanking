@@ -38,8 +38,8 @@ public class WebConfig {
 
             .authorizeHttpRequests(authorize ->
                     authorize
-                            .requestMatchers("/api/auth/login", "/api/auth/register", "/h2-console/**").permitAll()
-                            .requestMatchers("/api/auth/current","/api/clients/current/accounts","/api/clients/current/cards").hasAnyRole("CLIENT")
+                            .requestMatchers("/api/auth/login", "/api/auth/signup", "/h2-console/**").permitAll()
+                            .requestMatchers("/api/auth/current","/api/clients/current/accounts","/api/clients/current/cards").hasRole("CLIENT")
                             .requestMatchers("/api/clients/{id}","/api/clients","/api/clients/accounts/{id}").hasRole("ADMIN")
                             .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
             )

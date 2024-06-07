@@ -61,7 +61,7 @@ public class AuthControler {
     }
   }
 
-  @PostMapping("/register")
+  @PostMapping("/signup")
   public ResponseEntity<?> register(@RequestBody RegisterDto registerDto) {
     if(registerDto.firstName().isBlank()){
       return new ResponseEntity<>("First name is required", HttpStatus.FORBIDDEN);
@@ -89,7 +89,7 @@ public class AuthControler {
     newAccount.setNumber(AccountNumberGenerator.generate());
     newAccount.setBalance(0);
     newAccount.setClient(client);
-    newAccount.setCreationDate(LocalDate.now()); // Set the creation date to the current date
+    newAccount.setCreationDate(LocalDate.now());
     accountService.save(newAccount);
 
     return new ResponseEntity<>("Client and account created",HttpStatus.CREATED);

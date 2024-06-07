@@ -16,7 +16,7 @@ import java.util.Map;
 public class JwtUtilService {
 
   private static final SecretKey SECRET_KEY = Jwts //clase parte de libreria jwt para trabajar con tokens
-          .SIG //es para firmar el token jwt
+          .SIG //es para firmar el token jwtw
           .HS256 //algoritmo de encriptacion o de firma para el token (hash-based message authentication code)
           .key() //metodo que indica la clave que se usa para firmar el token
           .build(); // para finalizar construccion del obj y devolver el jwt con clave proporcionada

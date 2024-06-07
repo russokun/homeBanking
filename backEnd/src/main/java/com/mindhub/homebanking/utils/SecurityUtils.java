@@ -17,7 +17,7 @@ public class SecurityUtils {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentPrincipalName = authentication.getName();
 
-    // Assuming you have a method in your userDetailsService to get Client by username
+
     Client client = userDetailsService.findClientByUsername(currentPrincipalName);
     return client;
   }

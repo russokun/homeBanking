@@ -52,9 +52,9 @@ public class LoanControler {
     }
 
     // Verificar si el cliente ya tiene un préstamo
-//    if (!client.getClientLoans().isEmpty()) {
-//      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Client already has a loan.");
-//    }
+    if (!client.getClientLoans().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Client already has a loan.");
+    }
 
     // Validar datos
     if (loanApplication.getAmount() <= 0 || loanApplication.getInstallments() <= 0) {
