@@ -5,6 +5,10 @@ import com.mindhub.homebanking.dtos.CardRequestDto;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.CardService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.implement.CardServiceImpl;
+import com.mindhub.homebanking.services.implement.ClientServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +25,15 @@ import java.util.Set;
 public class CardControler {
 
   @Autowired
-  private ClientRepository clientRepository;
+  private ClientService clientService;
 
   @Autowired
-  private CardRepository cardRepository;
+  private CardService cardService;
 
   @PostMapping("/current/cards")
   public ResponseEntity<?> createCardForAuthenticatedClient(@RequestBody CardRequestDto cardRequest, Authentication authentication) {
     // Obtener el cliente actualmente autenticado
-    Client client = clientRepository.findByEmail(authentication.getName());
+    Client client = clientService.findByEmail(authentication.getName());
 
     // Verificar si el cliente ya tiene 3 tarjetas del tipo especificado
     long count = client.getCards().stream()
@@ -49,7 +53,7 @@ public class CardControler {
     newCard.setType(cardRequest.getType());
     newCard.setColor(cardRequest.getColor());
     newCard.setClient(client);
-    cardRepository.save(newCard);
+    cardService.save(newCard);
 
     return new ResponseEntity<>("Card created for authenticated client", HttpStatus.CREATED);
   }
@@ -67,7 +71,7 @@ public class CardControler {
   @GetMapping("/current/cards")
   public ResponseEntity<?> getCardsForAuthenticatedClient(Authentication authentication) {
     // Obtener el cliente actualmente autenticado
-    Client client = clientRepository.findByEmail(authentication.getName());
+    Client client = clientService.findByEmail(authentication.getName());
 
     // Obtener las tarjetas del cliente
     Set<Card> cards = client.getCards();

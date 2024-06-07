@@ -1,7 +1,9 @@
 // src/main/java/com/mindhub/homebanking/services/implement/TransactionServiceImpl.java
 package com.mindhub.homebanking.services.implement;
 
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,4 +19,7 @@ public class TransactionServiceImpl implements TransactionService {
   public void save(Transaction transaction) {
     transactionRepository.save(transaction);
   }
+
+ // @Override
+  //public void createAndSaveTransaction(String description, double amount, TransactionType type, Account account) {Transaction transaction = new Transaction(description, amount, type, account);save(transaction)}
 }

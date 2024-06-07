@@ -2,17 +2,18 @@ package com.mindhub.homebanking.controlers;
 
 import com.mindhub.homebanking.dtos.LoanApplicationDto;
 import com.mindhub.homebanking.dtos.LoansDto;
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Loans;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.TransactionRepository;
-import com.mindhub.homebanking.services.implement.AccountServiceImpl;
-import com.mindhub.homebanking.services.implement.LoanServiceImpl;
-import com.mindhub.homebanking.services.implement.TransactionServiceImpl;
+import com.mindhub.homebanking.models.*;
+
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.TransactionService;
+import com.mindhub.homebanking.servicesSecurity.UserDetailsServiceImpl;
+import com.mindhub.homebanking.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -26,26 +27,42 @@ import java.util.List;
 public class LoanControler {
 
   @Autowired
-  private LoanServiceImpl loanServiceImpl;
+  private LoanService loanService;
 
   @Autowired
-  private AccountServiceImpl accountServiceImpl;
+  private AccountService accountService;
 
   @Autowired
-  private TransactionServiceImpl transactionServiceImpl;
+  private TransactionService transactionService;
+
   @Autowired
-  private TransactionRepository transactionRepository;
+  private SecurityUtils securityUtils;
+
+
 
   @PostMapping
   @Transactional
   public ResponseEntity<String> applyForLoan(@RequestBody LoanApplicationDto loanApplication, @AuthenticationPrincipal UserDetails userDetails) {
+
+    Client client = securityUtils.getAuthenticatedClient();
+
+    // Verificar si el cliente tiene una cuenta
+    if (client.getAccounts().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Client does not have an account.");
+    }
+
+    // Verificar si el cliente ya tiene un préstamo
+//    if (!client.getClientLoans().isEmpty()) {
+//      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Client already has a loan.");
+//    }
+
     // Validar datos
     if (loanApplication.getAmount() <= 0 || loanApplication.getInstallments() <= 0) {
       return ResponseEntity.badRequest().body("Amount and installments must be greater than zero.");
     }
 
     // Verificar existencia del préstamo
-    Loans loan = loanServiceImpl.findById(loanApplication.getLoanId());
+    Loans loan = loanService.findById(loanApplication.getLoanId());
     if (loan == null) {
       return ResponseEntity.badRequest().body("Loan does not exist.");
     }
@@ -59,7 +76,7 @@ public class LoanControler {
     }
 
     // Verificar cuenta destino
-    Account destinationAccount = accountServiceImpl.findByNumber(loanApplication.getDestinationAccountNumber());
+    Account destinationAccount = accountService.findByNumber(loanApplication.getDestinationAccountNumber());
     if (destinationAccount == null) {
       return ResponseEntity.badRequest().body("Destination account does not exist.");
     }
@@ -69,7 +86,7 @@ public class LoanControler {
 
     // Crear solicitud de préstamo
     double totalAmount = loanApplication.getAmount();
-    loanServiceImpl.createClientLoan(userDetails.getUsername(), loan, totalAmount, loanApplication.getInstallments(),loanApplication);
+    loanService.createClientLoan(userDetails.getUsername(), loan, totalAmount, loanApplication.getInstallments(),loanApplication);
 
     // Crear transacción
     Transaction transaction = new Transaction();
@@ -78,19 +95,20 @@ public class LoanControler {
     transaction.setDate(LocalDateTime.now());
     transaction.setType(TransactionType.CREDIT);
     transaction.setClientAccount(destinationAccount);
-    transactionRepository.save(transaction);
+    transaction.addClientAccount(destinationAccount);
+    transactionService.save(transaction);
 
-    transactionServiceImpl.save(transaction);
+    //transactionService.save(transaction);
 
     // Actualizar cuenta destino
-    accountServiceImpl.updateBalance(destinationAccount.getId(), totalAmount);
+    accountService.updateBalance(destinationAccount.getId(), totalAmount);
 
     return ResponseEntity.ok("Loan approved successfully.");
   }
 
   @GetMapping
   public ResponseEntity<List<LoansDto>> getAvailableLoans() {
-    List<LoansDto> loans = loanServiceImpl.getAllLoans();
+    List<LoansDto> loans = loanService.getAllLoans();
     return ResponseEntity.ok(loans);
   }
 }

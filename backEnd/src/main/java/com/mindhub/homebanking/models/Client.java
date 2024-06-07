@@ -1,8 +1,17 @@
 package com.mindhub.homebanking.models;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+//La encapsulación es el mecanismo que restringe el acceso directo a algunos componentes de un objeto,
+//lo que significa que los detalles internos del objeto están ocultos.
+//Solo se puede acceder a esos componentes a través de métodos definidos o accesores (getters y setters).
+//La encapsulación proporciona un mayor control sobre los datos y ayuda a mantener la integridad del objeto.
+//Ventajas:
+//
+//Protección de datos: Previene la manipulación directa de los datos.
+//Modularidad: Facilita la modificación y el mantenimiento del código.
+//Flexibilidad: Permite cambiar la implementación interna sin afectar a los usuarios del objeto.
+
 
 @Entity
 public class Client {
@@ -15,6 +24,7 @@ public class Client {
   private String lastName;
   private String email;
   public String password;
+  private Boolean isAdmin = false;
 
   @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
   private Set<Account> accounts = new HashSet<>();
@@ -105,6 +115,16 @@ public class Client {
     card.setCardHolder(this.getFirstName() + " " + this.getLastName());
   }
 
+  public Boolean getAdmin() {
+    return isAdmin;
+  }
+
+  public Boolean setAdmin(Boolean admin) {
+    isAdmin = admin;
+    return admin;
+  }
+
+
   @Override
   public String toString() {
     return "Client{" +
@@ -117,6 +137,8 @@ public class Client {
             ", cards='" + cards + '\'' +
             '}';
   }
+
+
 }
 
 

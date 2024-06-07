@@ -77,8 +77,14 @@ public class Transaction {
     return clientAccount;
   }
 
+  //public void setClient(Client client) {this.client = client;}
+
   public void setClientAccount(Account clientAccount) {
     this.clientAccount = clientAccount;
+  }
+  public void addClientAccount(Account clientAccount) {
+    clientAccount.setClient(this.clientAccount.getClient());
+    clientAccount.addTransaction(this);
   }
 
   @Override

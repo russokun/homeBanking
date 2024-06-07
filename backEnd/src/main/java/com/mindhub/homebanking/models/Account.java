@@ -4,6 +4,19 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+
+//El polimorfismo permite que las clases hijas se comporten de diferentes maneras, incluso si comparten la misma interfaz o clase base.
+//En otras palabras, los métodos en diferentes clases pueden tener el mismo nombre pero comportamientos diferentes.
+
+//Ventajas:
+
+//Flexibilidad: Permite que el mismo código funcione con diferentes tipos de objetos.
+//Mantenimiento: Facilita la adición de nuevas funcionalidades con un mínimo de cambios en el código existente.
+//Tipos de Polimorfismo:
+
+//Polimorfismo en tiempo de compilación (sobrecarga de métodos): Métodos con el mismo nombre pero diferentes parámetros.
+//Polimorfismo en tiempo de ejecución (sobrescritura de métodos): Métodos en subclases que tienen el mismo nombre y parámetros que en la superclase, pero con una implementación diferente.
+
 @Entity
 public class Account {
 

@@ -15,6 +15,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   @Autowired
   private ClientRepository clientRepository;
 
+  public Client findClientByUsername(String username) {return clientRepository.findByEmail(username);}
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException { //sobreescribe el metodo loadbyusername
     //devuelve un UserDetails que representa al usuario que queremos tener en la sesion
@@ -23,11 +25,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     if (client == null) { //si el cliente no existe..
       throw new UsernameNotFoundException(username);
     }
+    String rol;
+    if (client.getAdmin()){
+      rol = "ADMIN";
+    } else {
+      rol = "CLIENT";
+    }
 
     return User //si client existe..
       .withUsername(client.getEmail())
       .password(client.getPassword())
-      .roles("CLIENT")
+      .roles(rol)
       .build();
   }
 

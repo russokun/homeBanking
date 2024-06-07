@@ -11,6 +11,5 @@ import java.util.List;
 public interface LoanService {
   Loans findById(Long id);
   ClientLoansDto createClientLoan(String username, Loans loan, double amount, int installments, LoanApplicationDto loanApplicationDto);
-
   List<LoansDto> getAllLoans();
 }

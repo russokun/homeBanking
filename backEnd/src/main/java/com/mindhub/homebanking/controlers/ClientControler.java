@@ -2,6 +2,7 @@ package com.mindhub.homebanking.controlers;
 import com.mindhub.homebanking.dtos.ClientDto;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +21,14 @@ import java.util.stream.Collectors;
 public class ClientControler {
 
   @Autowired
-  ClientRepository clientRepository;
+  ClientService clientService;
 
   //@GetMapping("/hello")
   //public String getClients() {return "Hello Clients from API!";}
 
-  @GetMapping("/")
+  @GetMapping()
   public ResponseEntity<?> getAllClients() {
-    List <Client> clientsList = clientRepository.findAll();
+    List <Client> clientsList = clientService.findAll();
     List <ClientDto> clientsDtoList = clientsList.stream().map(client -> new ClientDto(client)).collect(Collectors.toList());
     if (!clientsList.isEmpty()) {
       return new ResponseEntity<>(clientsDtoList, HttpStatus.OK);
@@ -37,7 +38,7 @@ public class ClientControler {
   }
   @GetMapping("/{id}")
   public ResponseEntity<?> getClient(@PathVariable Long id) {//path variable es un parametro que se pasa en la url
-    Client client = clientRepository.findById(id).orElse(null);
+    Client client = (Client) clientService.findById(id).orElse(null);
     if (client != null) {
       ClientDto clientDto = new ClientDto(client);
       return new ResponseEntity<>(clientDto, HttpStatus.OK);

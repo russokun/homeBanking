@@ -3,8 +3,8 @@ package com.mindhub.homebanking.controlers;
 import com.mindhub.homebanking.dtos.AccountDto;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.utils.AccountNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,15 +22,15 @@ import java.util.stream.Collectors;
 public class AccountControler {
 
   @Autowired
-  AccountRepository accountRepository;
+  private AccountService accountService;
 
   @Autowired
-  private ClientRepository clientRepository;
+  private ClientService clientService;
 
   @GetMapping("/current/accounts")
   public ResponseEntity<?> getAccounts(Authentication authentication) {
-    Client client = clientRepository.findByEmail(authentication.getName());
-    List<Account> accountsList = accountRepository.findByClient(client);
+    Client client = clientService.findByEmail(authentication.getName());
+    List<Account> accountsList = accountService.findByClient(client);
     List<AccountDto> accountsDtoList = accountsList.stream().map(AccountDto::new).collect(Collectors.toList());
 
     if (!accountsList.isEmpty()) {
@@ -42,7 +42,7 @@ public class AccountControler {
 
   @GetMapping("/accounts/{id}")
   public ResponseEntity<?> getAccountById(@PathVariable Long id) {
-    Optional<Account> optionalAccount = accountRepository.findById(id);
+    Optional<Account> optionalAccount = accountService.findById(id);
     if (optionalAccount.isPresent()) {
       Account account = optionalAccount.get();
       return new ResponseEntity<>(new AccountDto(account), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class AccountControler {
   @PostMapping("/current/accounts")
   public ResponseEntity<?> createAccountForAuthenticatedClient(Authentication authentication) {
     // Obtener el cliente actualmente autenticado
-    Client client = clientRepository.findByEmail(authentication.getName());
+    Client client = clientService.findByEmail(authentication.getName());
 
     // Verificar si el cliente ya tiene 3 cuentas
     if (client.getAccounts().size() >= 3) {
@@ -67,7 +67,7 @@ public class AccountControler {
     newAccount.setBalance(0);
     newAccount.setClient(client);
     newAccount.setCreationDate(LocalDate.now()); // Set the creation date to the current date
-    accountRepository.save(newAccount);
+    accountService.save(newAccount);
 
     return new ResponseEntity<>("Account created for authenticated client", HttpStatus.CREATED);
   }

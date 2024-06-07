@@ -1,7 +1,15 @@
 package com.mindhub.homebanking.models;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import com.mindhub.homebanking.models.Loans;
+
+//La abstracción es el proceso de ocultar los detalles complejos del sistema y mostrar solo la funcionalidad necesaria.
+//Permite centrarse en lo que hace un objeto en lugar de cómo lo hace.
+//
+//Ventajas:
+//
+//Simplificación: Reduce la complejidad del sistema al ocultar detalles innecesarios.
+//Enfoque: Permite a los desarrolladores centrarse en los aspectos importantes de la implementación.
+//Mantenibilidad: Facilita el mantenimiento y la evolución del sistema.
 
 @Entity
 public class ClientLoans {

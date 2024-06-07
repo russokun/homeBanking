@@ -2,15 +2,19 @@ package com.mindhub.homebanking.controlers;
 
 import com.mindhub.homebanking.dtos.TransferDto;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.TransactionService;
+import com.mindhub.homebanking.servicesSecurity.UserDetailsServiceImpl;
 import com.mindhub.homebanking.utils.MissingParameterException;
+import com.mindhub.homebanking.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +26,22 @@ import java.time.LocalDateTime;
 public class TransactionControler {
 
   @Autowired
-  private AccountRepository accountRepository;
+  private AccountService accountService;
 
   @Autowired
-  private TransactionRepository transactionRepository;
+  private TransactionService transactionService;
+
+  @Autowired
+  private SecurityUtils securityUtils;
 
 
-// ...
 
   @Transactional
   @PostMapping
   public ResponseEntity<?> createTransaction(@RequestBody TransferDto transferDto, Authentication authentication) throws MethodArgumentNotValidException {
+
+    Client client = securityUtils.getAuthenticatedClient();
+
     // Verificar que los parámetros no estén vacíos
     if (transferDto.getAmount() == null || transferDto.getDescription() == null || transferDto.getDescription().trim().isEmpty()) {
       throw new MissingParameterException("Invalid or missing parameters");
@@ -48,7 +57,7 @@ public class TransactionControler {
     }
 
     // Verificar que la cuenta de origen exista
-    Account sourceAccount = accountRepository.findByNumber(transferDto.getSourceAccountNumber());
+    Account sourceAccount = accountService.findByNumber(transferDto.getSourceAccountNumber());
     if (sourceAccount == null) {
       return new ResponseEntity<>("Source account not found", HttpStatus.NOT_FOUND);
     }
@@ -59,7 +68,7 @@ public class TransactionControler {
     }
 
     // Verificar que la cuenta de destino exista
-    Account destinationAccount = accountRepository.findByNumber(transferDto.getDestinationAccountNumber());
+    Account destinationAccount = accountService.findByNumber(transferDto.getDestinationAccountNumber());
     if (destinationAccount == null) {
       return new ResponseEntity<>("Destination account not found", HttpStatus.NOT_FOUND);
     }
@@ -79,12 +88,12 @@ public class TransactionControler {
     destinationAccount.setBalance(destinationAccount.getBalance() + transferDto.getAmount());
 
     // Guardar las transacciones en el repositorio de transacciones.
-    transactionRepository.save(debitTransaction);
-    transactionRepository.save(creditTransaction);
+    transactionService.save(debitTransaction);
+    transactionService.save(creditTransaction);
 
     // Guardar las cuentas en el repositorio de cuentas.
-    accountRepository.save(sourceAccount);
-    accountRepository.save(destinationAccount);
+    accountService.save(sourceAccount);
+    accountService.save(destinationAccount);
 
     return new ResponseEntity<>("Transaction created", HttpStatus.CREATED);
   }
