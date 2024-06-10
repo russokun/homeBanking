@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
+import com.mindhub.homebanking.utils.CardNumberGenerator;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -46,7 +46,7 @@ public class CardControler {
     // Crear una nueva tarjeta para el cliente
     Card newCard = new Card();
     newCard.setCardHolder(client.getFirstName() + " " + client.getLastName());
-    newCard.setNumber(generateCardNumber());
+    newCard.setNumber(CardNumberGenerator.generate());
     newCard.setCvv(generateCvv());
     newCard.setFromDate(LocalDate.now());
     newCard.setDueDate(LocalDate.now().plusYears(5));
@@ -58,10 +58,7 @@ public class CardControler {
     return new ResponseEntity<>("Card created for authenticated client", HttpStatus.CREATED);
   }
 
-  private String generateCardNumber() {
-    Random random = new Random();
-    return String.format("%04d-%04d-%04d-%04d", random.nextInt(10000), random.nextInt(10000), random.nextInt(10000), random.nextInt(10000));
-  }
+
 
   private int generateCvv() {
     Random random = new Random();

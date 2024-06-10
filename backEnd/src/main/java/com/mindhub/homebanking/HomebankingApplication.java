@@ -87,9 +87,7 @@ public class HomebankingApplication {
 			cardRepository.save(card2);
 			cardRepository.save(card3);
 
-			System.out.println(client1);
-			System.out.println(client2);
-			System.out.println(loan1);
+
 		};
 	}
 }
