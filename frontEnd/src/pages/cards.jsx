@@ -50,8 +50,8 @@ const Cards = () => {
 
   const melbaCreditCards = data.cards?.filter(card => card.type === 'CREDIT' && card.cardHolder === 'Melba Morel') || [];
   const melbaDebitCards = data.cards?.filter(card => card.type === 'DEBIT' && card.cardHolder === 'Melba Morel') || [];
-  const creditCards = melbaCreditCards.map(card => (
-    <div className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg mb-5">
+  const creditCards = melbaCreditCards.map((card, index) => (
+    <div key={index} className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg mb-5">
       <p className="text-2xl font-medium">{card.number}</p>
       <div className="flex justify-between gap-10">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 58 36" height="36" width="58">
@@ -67,8 +67,8 @@ const Cards = () => {
     </div>
   ));
 
-  const debitCards = melbaDebitCards.map(card => (
-    <div className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg">
+  const debitCards = melbaDebitCards.map((card, index) => (
+    <div key={index} className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg">
       <p className="text-2xl font-medium">{card.number}</p>
       <div className="flex justify-between gap-10">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 58 36" height="36" width="58">
@@ -83,6 +83,7 @@ const Cards = () => {
       </div>
     </div>
   ));
+  
 
   return (
     <div className='flex w-full h-auto bg-slate-200 flex-col'>

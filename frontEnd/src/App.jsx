@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import './App.css'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import React from 'react'; // Import React
 import Header from './components/header';
 import Footer from './components/footer';
@@ -12,32 +11,95 @@ import RequestLoan from './pages/requestLoan';
 import RequestCard from './pages/requestCard';
 import Login from './pages/login';
 import Register from './pages/register';
-import Landing from './layouts/Landing';
+import Landing from './layouts/landing';
+import { useSelector } from 'react-redux';
+const authRoutes = [
+  {
+    path: '/accounts',
+    element: <Accounts />,
+    key: 'accounts',
+  },
+  {
+    path: '/cards',
+    element: <Cards />,
+    key: 'cards',
+  },
+  {
+    path: '/loans',
+    element: <Loans />,
+    key: 'loans',
+  },
+  {
+    path: '/transactions',
+    element: <MakeTransaction />,
+    key: 'transactions',
+  },
+  {
+    path: '/requestLoan',
+    element: <RequestLoan />,
+    key: 'requestLoan',
+  },
+  {
+    path: '/requestCard',
+    element: <RequestCard />,
+    key: 'requestCard',
+  },
+]
+const NoAuthRoutes = [
+  {
+    path: '/login',
+    element: <Login />,
+    key: 'login',
+  },
+  {
+    path: '/register',
+    element: <Register />,
+    key: 'register',
+  }
+]
+const publicRotues = [
+  {
+    path: '/',
+    element: <Landing />,
+    key: 'home',
+  }
+]
 
 function App() {
 
+  const loggedIn = useSelector(state => state.authReducer.loggedIn);
+
   return (
-    <>
-      
-        <Router>
-          <div>
-            <Header />
-            <Routes>
-            <Route path='/home' element={<Landing />} />
-              <Route path='/register' element={<Register />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/' element={<Accounts />} />
-              <Route path='/cards' element={<Cards />} />
-              <Route path='/loans' element={<Loans />} />
-              <Route path='/transactions' element={<MakeTransaction />} />
-              <Route path='/requestLoan' element={<RequestLoan />} />
-              <Route path='/requestCard' element={<RequestCard />}/>
-            </Routes>
-            <Footer />
-          </div>
-        </Router>
-      
-    </>
+    <Router>
+      <Header />
+      <Routes>
+        {loggedIn ? (
+          authRoutes.map((route) => (
+            <Route
+              key={route.key}
+              path={route.path}
+              element={route.element}
+            />
+          ))
+        ) : (
+          NoAuthRoutes.map((route) => (
+            <Route
+              key={route.key}
+              path={route.path}
+              element={route.element}
+            />
+          ))
+        )}
+        {publicRotues.map((route) => (
+          <Route
+            key={route.key}
+            path={route.path}
+            element={route.element}
+          />
+        ))}
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 

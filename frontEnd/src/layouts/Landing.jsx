@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Card } from 'flowbite-react';
+import {  Card } from 'flowbite-react';
 import { HiOutlineHand, HiOutlineShieldCheck, HiOutlineCurrencyDollar, HiOutlineCreditCard, HiOutlineSwitchHorizontal} from 'react-icons/hi';
 import { HiOutlineBanknotes } from "react-icons/hi2";
 import { HiOutlineWallet } from "react-icons/hi2";
@@ -10,7 +10,7 @@ export default function Landing() {
     <div className="bg-[#0F4C81] min-h-screen">
       <main className="container mx-auto px-4 py-16">
         <section className="text-center text-white mb-16">
-          <h1 className="text-5xl font-bold mb-4">Welcome to MindHubBrothers Bank!</h1>
+          <h1 className="text-5xl font-bold mb-4">Welcome to the M.B Bank!</h1>
           <p className="text-xl">Your reliable partner for digital banking solutions.</p>
         </section>
         <section className="mb-16">
