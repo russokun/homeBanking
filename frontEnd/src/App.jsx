@@ -3,18 +3,18 @@ import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import React from 'react'; // Import React
 import Header from './components/header';
-import AccountLayout from './layouts/accountLayout'; // Import AccountLayout component
-import AccountSelectedLayout from './layouts/accountSelectedLayout'; // Import AccountSelectedLayout component
-import CardsLayout from './layouts/cardsLayout'; // Import CardsLayout component
-import MakeTransactionLayout from './layouts/makeTransactionLayout'; // Import MakeTransactionLayout component
-import RequestCardLayout from './layouts/requestCardLayout'; // Import RequestCardLayout component
-import RequestLoanLayout from './layouts/requestLoanLayout';
-import LoansLayout from './layouts/loansLayout';
 import Footer from './components/footer';
-
+import Accounts from './pages/accounts';
+import Cards from './pages/cards';
+import Loans from './pages/loans';
+import MakeTransaction from './pages/makeTransaction';
+import RequestLoan from './pages/requestLoan';
+import RequestCard from './pages/requestCard';
+import Login from './pages/login';
+import Register from './pages/register';
+import Landing from './layouts/Landing';
 
 function App() {
- 
 
   return (
     <>
@@ -23,12 +23,15 @@ function App() {
           <div>
             <Header />
             <Routes>
-              <Route path='/' element={<AccountLayout />} />
-              <Route path='/cards' element={<CardsLayout />} />
-              <Route path='/loans' element={<LoansLayout />} />
-              <Route path='/transactions' element={<MakeTransactionLayout />} />
-              <Route path='/requestLoan' element={<RequestLoanLayout />} />
-              <Route path='/requestCard' element={<RequestCardLayout />}/>
+            <Route path='/home' element={<Landing />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
+              <Route path='/' element={<Accounts />} />
+              <Route path='/cards' element={<Cards />} />
+              <Route path='/loans' element={<Loans />} />
+              <Route path='/transactions' element={<MakeTransaction />} />
+              <Route path='/requestLoan' element={<RequestLoan />} />
+              <Route path='/requestCard' element={<RequestCard />}/>
             </Routes>
             <Footer />
           </div>

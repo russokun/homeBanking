@@ -32,7 +32,7 @@ const RequestCard = () => {
       </form>
 
       <div className="w-full lg:w-1/2 flex items-center justify-center">
-        <img src="/src/assets/applyCard.png" alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
+        <img src="/src/assets/img/applyCard.png" alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
       </div>
     </div>
   </body>

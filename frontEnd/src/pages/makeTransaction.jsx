@@ -2,7 +2,7 @@ import React from 'react';
 
 const MakeTransaction = () => {
   return (
-    <div className="bg-slate-200 flex flex-col items-center min-h-max md:h-[80vh]">
+  <div className="bg-slate-200 flex flex-col items-center min-h-max md:h-[80vh]">
 
     <h1 className="font-extrabold text-3xl pt-5 mb-5">Make a Transaction</h1>
   
@@ -40,7 +40,7 @@ const MakeTransaction = () => {
       </div>
   
       <div className="w-full md:w-1/2 flex justify-start items-center md:ml-0 ">
-        <img src="/src/assets/makeTransaction.png" alt="Making a transaction." className="w-full md:w-auto sm:h-[450px] mt-[20px] md:mt-0 xl:h-[500px] rounded-lg" />
+        <img src="/src/assets/img/makeTransaction.png" alt="Making a transaction." className="w-full md:w-auto sm:h-[450px] mt-[20px] md:mt-0 xl:h-[500px] rounded-lg" />
       </div>
     </div>
   

@@ -42,7 +42,7 @@ const RequestLoan = () => {
       </div>
   
       <div className="w-full md:w-1/2 flex justify-start items-center md:ml-0">
-        <img src="/src/assets/loan.png" alt="Making a transaction." className="w-full md:w-auto sm:h-[450px] mt-[20px] md:mt-0 xl:h-[500px] rounded-lg" />
+        <img src="/src/assets/img/loan.png" alt="Making a transaction." className="w-full md:w-auto sm:h-[450px] mt-[20px] md:mt-0 xl:h-[500px] rounded-lg" />
       </div>
     </div>
   

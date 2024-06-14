@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 const Cards = () => {
   const [data, setData] = useState(null);
-  const [token, setToken] = useState(null);
+  const token = useSelector(store => store.authReducer.token);
   const [error, setError] = useState(null);
 
-  // Autenticación
-  useEffect(() => {
-    axios.post('http://localhost:8080/api/auth/login', {
-      email: "melmorel@hotmail.com",
-      password: "melmorel123"
-    })
-    .then(response => {
-      setToken(response.data);
-    })
-    .catch(error => {
-      console.error('Error al autenticar:', error);
-      setError('Error al autenticar');
-    });
-  }, []);
+  // // Autenticación
+  // useEffect(() => {
+  //   axios.post('http://localhost:8080/api/auth/login', {
+  //     email: "melmorel@hotmail.com",
+  //     password: "melmorel123"
+  //   })
+  //   .then(response => {
+  //     setToken(response.data);
+  //   })
+  //   .catch(error => {
+  //     console.error('Error al autenticar:', error);
+  //     setError('Error al autenticar');
+  //   });
+  // }, []);
 
   // Obtención de los datos
   useEffect(() => {
