@@ -13,11 +13,17 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Landing from './layouts/landing';
 import { useSelector } from 'react-redux';
+import AccountSelected from './components/accountSelected';
 const authRoutes = [
   {
     path: '/accounts',
     element: <Accounts />,
     key: 'accounts',
+  },
+  {
+    path: '/accounts/:accountId',
+    element: <AccountSelected />,
+    key: 'accountSelected',
   },
   {
     path: '/cards',

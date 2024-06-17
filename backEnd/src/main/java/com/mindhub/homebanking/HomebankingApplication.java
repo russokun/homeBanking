@@ -32,14 +32,14 @@ public class HomebankingApplication {
 			LocalDate hoy = LocalDate.now();
 			Account account1 = new Account("VIN001", ayer, 5000);
 			Account account2 = new Account("VIN002", hoy, 7500);
-			Account account3 = new Account("JHD001", hoy, 10000);
+			Account account3 = new Account("VIN003", hoy, 10000);
 
 			Loans loan1 = new Loans(Set.of(6, 12, 18, 24, 36),"Personal Loan", 100000);
 			Loans loan2 = new Loans(Set.of(6, 10, 24),"Car Loan", 500000);
 			Loans loan3 = new Loans(Set.of(12, 24, 36),"Home Loan", 1000000);
 
 			Transaction transaction1 = new Transaction("For the pizza party!", 5000.0,LocalDateTime.now(), TransactionType.DEBIT);
-			Transaction transaction2 = new Transaction("We are going for trip!", -13000.0,LocalDateTime.now(), TransactionType.CREDIT);
+			Transaction transaction2 = new Transaction("We are going for trip!", 13000.0,LocalDateTime.now(), TransactionType.CREDIT);
 
 			loansRepository.save(loan1);
 			loansRepository.save(loan2);

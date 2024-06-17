@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 const Loans = () => {
   const [data, setData] = useState([]);
-  const [token, setToken] = useState(null);
+  const token = useSelector(store => store.authReducer.token);
 
-  // Autenticación
-  useEffect(() => {
-    axios.post('http://localhost:8080/api/auth/login', {
-      email: "melmorel@hotmail.com",
-      password: "melmorel123"
-    })
-    .then(response => {
-      // Guarda el token en el estado de la aplicación
-      setToken(response.data);
-    })
-    .catch(error => {
-      console.error('Error al autenticar:', error);
-    });
-  }, []);
+  // // Autenticación
+  // useEffect(() => {
+  //   axios.post('http://localhost:8080/api/auth/login', {
+  //     email: "melmorel@hotmail.com",
+  //     password: "melmorel123"
+  //   })
+  //   .then(response => {
+  //     // Guarda el token en el estado de la aplicación
+  //     setToken(response.data);
+  //   })
+  //   .catch(error => {
+  //     console.error('Error al autenticar:', error);
+  //   });
+  // }, []);
 
   // Obtención de los datos
   useEffect(() => {
@@ -43,7 +43,7 @@ const Loans = () => {
   console.log(melba);
 
   return (
-    <div className='w-full min-h-screen  bg-slate-200 sm:block flex flex-col items-center'>
+    <div className='w-full h-[84vh] bg-slate-200 sm:block flex flex-col items-center'>
       <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3'>Your Loans</h1>
       
       <div className='flex mt-16 w-full justify-center gap-4 flex-wrap items-center'>

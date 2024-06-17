@@ -44,7 +44,7 @@ const Register = () => {
   const errors = verifyForm();
 
   return (
-    <div className='w-full h-[80vh] bg-slate-200 flex justify-center items-center'>
+    <div className='w-full h-[84vh] bg-slate-200 flex justify-center items-center'>
       <div className='bg-white p-8 rounded-lg shadow-lg'>
         <h2 className='text-2xl font-bold mb-4'>Register</h2>
         <form>
@@ -93,6 +93,7 @@ const Register = () => {
           >
             Register
           </button>
+          <p className="text-center mt-4">or <a href="/login" className="text-blue-500 hover:underline">Login</a></p>
         </form>
       </div>
     </div>

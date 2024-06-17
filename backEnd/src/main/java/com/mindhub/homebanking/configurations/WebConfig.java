@@ -40,7 +40,7 @@ public class WebConfig {
                     authorize
                             .requestMatchers("/api/auth/login", "/api/auth/signup", "/h2-console/**").permitAll()
                             .requestMatchers("/api/auth/current","/api/clients/current/accounts","/api/clients/current/cards").hasRole("CLIENT")
-                            .requestMatchers("/api/clients/{id}","/api/clients","/api/clients/accounts/{id}").hasRole("ADMIN")
+                            .requestMatchers("/api/clients/{id}","/api/clients").hasRole("ADMIN")
                             .anyRequest().authenticated() //cualquier otra peticion requiere autenticacion
             )
 

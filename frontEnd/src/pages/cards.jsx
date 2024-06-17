@@ -52,7 +52,12 @@ const Cards = () => {
   const melbaDebitCards = data.cards?.filter(card => card.type === 'DEBIT' && card.cardHolder === 'Melba Morel') || [];
   const creditCards = melbaCreditCards.map((card, index) => (
     <div key={index} className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg mb-5">
+      <div className='mt-5'>
+      <p className="text-lg font-medium">CVV: {card.cvv}</p> 
+      <p className="text-lg font-medium">Type: {card.type}</p>
+      </div>
       <p className="text-2xl font-medium">{card.number}</p>
+      
       <div className="flex justify-between gap-10">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 58 36" height="36" width="58">
           <circle fillOpacity="0.62" fill="#F9CCD1" r="18" cy="18" cx="18"></circle>
@@ -62,6 +67,7 @@ const Cards = () => {
         <div className="flex-1 flex flex-col justify-end">
           <p className="self-end">Valid Date</p>
           <p className="self-end">{card.dueDate}</p>
+          
         </div>
       </div>
     </div>
@@ -69,6 +75,10 @@ const Cards = () => {
 
   const debitCards = melbaDebitCards.map((card, index) => (
     <div key={index} className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg">
+      <div className='mt-5'>
+      <p className="text-lg font-medium">CVV: {card.cvv}</p> 
+      <p className="text-lg font-medium">Type: {card.type}</p>
+      </div>
       <p className="text-2xl font-medium">{card.number}</p>
       <div className="flex justify-between gap-10">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 58 36" height="36" width="58">

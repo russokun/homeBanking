@@ -1,51 +1,88 @@
 import React from 'react';
+import { useState } from 'react';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const MakeTransaction = () => {
-  return (
-  <div className="bg-slate-200 flex flex-col items-center min-h-max md:h-[80vh]">
+  const [formData, setFormData] = useState({
+    amount: '',
+    description: '',
+    sourceAccountNumber: '',
+    destinationAccountNumber: '',
+  });
+  const token = useSelector(store => store.authReducer.token);
 
-    <h1 className="font-extrabold text-3xl pt-5 mb-5">Make a Transaction</h1>
+  const handleChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  };
   
-    <div className="flex flex-col md:flex-row w-full h-full md:h-auto bg-slate-200 justify-center items-center md:items-start p-5">
-      <div className="flex flex-col w-full md:w-1/2">
-        <form className="bg-white p-8 rounded-lg shadow-md w-full border-2 border-gray-300  lg:h-[450px] xl:h-[500px]">
-          <div className="mb-4 flex gap-3 flex-wrap">
-            <label className="block text-gray-700 text-sm font-bold mb-2">Type of Destiny:</label>
-            <div className="flex items-center mb-2">
-              <input id="option1" type="radio" name="options" value="option1" className="mr-2"/>
-              <label htmlFor="option1" className="text-gray-700">Own</label>
-            </div>
-            <div className="flex items-center mb-2">
-              <input id="option2" type="radio" name="options" value="option2" className="mr-2"/>
-              <label htmlFor="option2" className="text-gray-700">Another's</label>
-            </div>
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
+
+    axios.post('http://localhost:8080/api/transactions', formData, {
+      headers: {
+        Authorization: 'Bearer ' + token
+      }
+    })
+    .then(response => {
+      console.log(response.data);
+      // Aquí puedes manejar la respuesta de la API
+    })
+    .catch(error => {
+      console.error('Error al realizar la transacción:', error);
+      // Aquí puedes manejar los errores
+    });
+  };
+
+  return (
+    <div className='w-full h-[84vh] bg-slate-200 sm:block flex flex-col items-center'>
+      <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3'>Make Transaction</h1>
+      
+      <div className='flex mt-16 w-full justify-center gap-4 flex-wrap items-center'>
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border-2 border-gray-300 shadow-lg just">
+          <div className='flex flex-col items-center'>
+            <input
+              type="number"
+              name="amount"
+              value={formData.amount}
+              onChange={handleChange}
+              placeholder="Amount"
+              className="text-xl font-bold mb-4"
+            />
+            <input
+              type="text"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              placeholder="Description"
+              className="text-xl font-bold mb-4"
+            />
+            <input
+              type="text"
+              name="sourceAccountNumber"
+              value={formData.sourceAccountNumber}
+              onChange={handleChange}
+              placeholder="Source Account Number"
+              className="text-xl font-bold mb-4"
+            />
+            <input
+              type="text"
+              name="destinationAccountNumber"
+              value={formData.destinationAccountNumber}
+              onChange={handleChange}
+              placeholder="Destination Account Number"
+              className="text-xl font-bold mb-4"
+            />
+            <button type="submit" className="text-xl font-bold mb-4 bg-green-500 rounded-xl w-40">Sumbit</button>
           </div>
-  
-          <label htmlFor="select" className="block text-gray-700 text-sm font-bold mb-2">Source Account:</label>
-          <select id="select" className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4">
-            <option>VIN-001</option>
-            <option>VIN-002</option>
-          </select>
-  
-          <label htmlFor="amount" className="block text-gray-700 text-sm font-bold mb-2">Amount ($):</label>
-          <input type="number" id="amount" name="amount" placeholder="Enter amount" className="block w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4"/>
-  
-          <label htmlFor="description" className="block text-gray-700 text-sm font-bold mb-2">Description:</label>
-          <textarea id="description" name="description" placeholder="Enter description" className="block w-full bg-white border max-h-20 border-gray-300 hover:border-gray-500 px-4 py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4"></textarea>
-  
-          <button type="submit" className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Submit
-          </button>
         </form>
       </div>
-  
-      <div className="w-full md:w-1/2 flex justify-start items-center md:ml-0 ">
-        <img src="/src/assets/img/makeTransaction.png" alt="Making a transaction." className="w-full md:w-auto sm:h-[450px] mt-[20px] md:mt-0 xl:h-[500px] rounded-lg" />
-      </div>
     </div>
-  
-  </div>
   );
-};
+}
 
 export default MakeTransaction;

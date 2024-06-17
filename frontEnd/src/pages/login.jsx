@@ -51,7 +51,7 @@ const Login = () => {
   };
 
   return (
-    <div className='w-full h-[80vh] bg-slate-200 flex justify-center items-center'>
+    <div className='w-full h-[84vh] bg-slate-200 flex justify-center items-center'>
       <div className='bg-white p-8 rounded-lg shadow-lg'>
         <h2 className='text-2xl font-bold mb-4'>Login</h2>
         <form onSubmit={handleLogin}>
@@ -81,6 +81,7 @@ const Login = () => {
           >
             Login
           </button>
+          <p className="text-center mt-4">or <a href="/register" className="text-blue-500 hover:underline">Register</a></p>
         </form>
       </div>
     </div>
