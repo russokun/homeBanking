@@ -13,7 +13,7 @@ const initialState = {
     email:'',
     password:''
   }
-}
+} 
 //por buena practica parametro es la ref del estado y la accion/callback(este implementa la logica/construcion de casos)
 const authReducer = createReducer(initialState, (builder) => {
   builder
@@ -21,6 +21,7 @@ const authReducer = createReducer(initialState, (builder) => {
     //guarda el token en el estado de la aplicacion
     //false a true
     //modeo del draft, solo con redux toolkitstate.expiresIn = action.payload.expiresIn
+    alert ('loged Sucessfully!')
     return{
       ...state,
       user:{
@@ -34,6 +35,7 @@ const authReducer = createReducer(initialState, (builder) => {
   })
   .addCase(logout,(state,action)=>{
     //true a false
+    alert ('See u later!')
     return initialState
   })
 })

@@ -24,7 +24,7 @@ const Register = () => {
       }
     } catch (error) {
       console.log('Error al registrar:', error);
-      alert('Error at register user');
+      alert('Error at register user', error);
     }
   };
 
@@ -44,8 +44,9 @@ const Register = () => {
   const errors = verifyForm();
 
   return (
-    <div className='w-full h-[84vh] bg-slate-200 flex justify-center items-center'>
-      <div className='bg-white p-8 rounded-lg shadow-lg'>
+    <div className='w-full h-[84vh]  flex justify-center items-center' style={{ backgroundImage: `url(https://www.shutterstock.com/image-vector/bank-account-registration-3d-isometric-600nw-2043550520.jpg)`, backgroundSize: 'cover',backgroundPosition: 'center'}}>
+      <div className='bg-white p-8 rounded-lg shadow-lg flex flex-col'>
+      <img src="https://cdn-icons-png.flaticon.com/512/6341/6341964.png" className='size-20 self-center' alt="bank logo" />
         <h2 className='text-2xl font-bold mb-4'>Register</h2>
         <form>
           <label className='block mb-4'>

@@ -48,8 +48,8 @@ const Cards = () => {
     return <div>Loading...</div>;
   }
 
-  const melbaCreditCards = data.cards?.filter(card => card.type === 'CREDIT' && card.cardHolder === 'Melba Morel') || [];
-  const melbaDebitCards = data.cards?.filter(card => card.type === 'DEBIT' && card.cardHolder === 'Melba Morel') || [];
+  const melbaCreditCards = data.cards?.filter(card => card.type === 'CREDIT') || [];
+  const melbaDebitCards = data.cards?.filter(card => card.type === 'DEBIT') || [];
   const creditCards = melbaCreditCards.map((card, index) => (
     <div key={index} className="card relative h-[260px] w-[400px] flex flex-col justify-end px-6 py-10 text-white rounded-3xl gap-8 bg-gradient-to-r from-blue-600 to-slate-800 shadow-lg mb-5">
       <div className='mt-5'>
@@ -106,7 +106,7 @@ const Cards = () => {
         {creditCards}
       </div>
       <h2 className='text-xl font-bold mb-4 mt-3'>Debit</h2>
-      <div className='flex flex-row flex-wrap gap-5 justify-evenly'>
+      <div className='flex flex-row flex-wrap gap-5 justify-evenly mb-4'>
         {debitCards}
       </div>
     </div>

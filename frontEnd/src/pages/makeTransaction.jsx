@@ -21,7 +21,6 @@ const MakeTransaction = () => {
   
   const handleSubmit = (event) => {
     event.preventDefault();
-    
 
     axios.post('http://localhost:8080/api/transactions', formData, {
       headers: {
@@ -30,17 +29,18 @@ const MakeTransaction = () => {
     })
     .then(response => {
       console.log(response.data);
+      alert('Transaction released successfully');
       // Aquí puedes manejar la respuesta de la API
     })
     .catch(error => {
-      console.error('Error al realizar la transacción:', error);
+      alert('Error at realease the transaction:', error);
       // Aquí puedes manejar los errores
     });
   };
 
   return (
     <div className='w-full h-[84vh] bg-slate-200 sm:block flex flex-col items-center'>
-      <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3'>Make Transaction</h1>
+      <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3'>Make Transactions</h1>
       
       <div className='flex mt-16 w-full justify-center gap-4 flex-wrap items-center'>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border-2 border-gray-300 shadow-lg just">

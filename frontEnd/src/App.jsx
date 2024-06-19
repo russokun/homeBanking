@@ -12,8 +12,11 @@ import RequestCard from './pages/requestCard';
 import Login from './pages/login';
 import Register from './pages/register';
 import Landing from './layouts/landing';
-import { useSelector } from 'react-redux';
 import AccountSelected from './components/accountSelected';
+import AuthRoute from './components/HOCs/authRoute';
+import NoAuthRoute from './components/HOCs/noAuthRoute';
+import RouteHoc from './components/HOCs/routeHoc';
+
 const authRoutes = [
   {
     path: '/accounts',
@@ -51,7 +54,7 @@ const authRoutes = [
     key: 'requestCard',
   },
 ]
-const NoAuthRoutes = [
+const noAuthRoutes = [
   {
     path: '/login',
     element: <Login />,
@@ -72,38 +75,18 @@ const publicRotues = [
 ]
 
 function App() {
-
-  const loggedIn = useSelector(state => state.authReducer.loggedIn);
-
+    
   return (
     <Router>
       <Header />
-      <Routes>
-        {loggedIn ? (
-          authRoutes.map((route) => (
-            <Route
-              key={route.key}
-              path={route.path}
-              element={route.element}
-            />
-          ))
-        ) : (
-          NoAuthRoutes.map((route) => (
-            <Route
-              key={route.key}
-              path={route.path}
-              element={route.element}
-            />
-          ))
-        )}
-        {publicRotues.map((route) => (
-          <Route
-            key={route.key}
-            path={route.path}
-            element={route.element}
-          />
-        ))}
-      </Routes>
+        <Routes>
+          {authRoutes.map(AuthRoute)}
+
+          {noAuthRoutes.map(NoAuthRoute)}
+          
+          {publicRotues.map(route => RouteHoc(route.element, route.path, route.key))}
+          <Route path='*' element={<Navigate to='/' />} />
+        </Routes>
       <Footer />
     </Router>
   );

@@ -51,8 +51,9 @@ const Login = () => {
   };
 
   return (
-    <div className='w-full h-[84vh] bg-slate-200 flex justify-center items-center'>
-      <div className='bg-white p-8 rounded-lg shadow-lg'>
+    <div className='w-full h-[84vh] bg-slate-200 flex justify-center items-center' style={{ backgroundImage: `url(https://static.vecteezy.com/system/resources/previews/002/644/868/original/concept-for-mobile-banking-and-online-payment-using-laptop-and-mobile-smart-phone-for-online-banking-and-accounting-flat-illustration-design-for-banner-landing-page-flyer-vector.jpg)`, backgroundSize: 'cover',backgroundPosition: 'center'}}>
+      <div className='bg-white p-8 rounded-lg shadow-lg flex flex-col'>
+        <img src="https://cdn-icons-png.flaticon.com/512/6341/6341964.png" className='size-20 self-center' alt="bank logo" />
         <h2 className='text-2xl font-bold mb-4'>Login</h2>
         <form onSubmit={handleLogin}>
           <label className='block mb-4 font-semibold'>
