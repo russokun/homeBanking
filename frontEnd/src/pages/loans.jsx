@@ -40,7 +40,7 @@ const Loans = () => {
   }, [token]);  // Dependencia del token
 
   const melba = data;
-  console.log(melba);
+  console.log(melba.loans);
 
   return (
     <div className='w-full h-[84vh] bg-slate-200 sm:block flex flex-col items-center'>
@@ -50,7 +50,7 @@ const Loans = () => {
         {melba && melba.loans && melba.loans.map((loan, index) => (
           <button key={index} className="bg-white p-6 rounded-lg border-2 border-gray-300 shadow-lg">
             <h2 className="text-xl font-bold mb-4">Loan Name: {loan.name}</h2>
-            <h2 className="text-xl font-bold mb-4">Amount: {loan.maxAmmount}</h2>
+            <h2 className="text-xl font-bold mb-4">Max Amount: {loan.maxAmmount}</h2>
             <h2 className="text-xl font-bold">Application Date: 30 / 04 / 24 </h2>
           </button>
         ))}

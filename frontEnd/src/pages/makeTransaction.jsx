@@ -39,11 +39,13 @@ const MakeTransaction = () => {
   };
 
   return (
-    <div className='w-full h-[84vh] bg-slate-200 sm:block flex flex-col items-center'>
-      <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3'>Make Transactions</h1>
-      
+    <div className='w-full h-[84vh] sm:block flex flex-col items-center' style={{ backgroundImage: `url(https://i0.wp.com/theecmconsultant.com/wp-content/uploads/2022/04/digital-transaction-management.webp?fit=5315%2C4342&ssl=1)`, backgroundSize: 'cover',backgroundPosition: 'center'}}>
+      <p>.</p>
       <div className='flex mt-16 w-full justify-center gap-4 flex-wrap items-center'>
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border-2 border-gray-300 shadow-lg just">
+      
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg border-2 border-gray-300 shadow-lg just flex flex-col">
+        <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3 text-center'>Make Transactions</h1>
+        <img src="https://www.globalsign.com/application/files/3016/3523/2743/DocumentSign_DSS_Banner_Electronic_Transactions_3_APAC_2021_10_12.jpg" className='size-40 self-center' alt="bank logo" />
           <div className='flex flex-col items-center'>
             <input
               type="number"

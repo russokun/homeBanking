@@ -96,7 +96,7 @@ const Cards = () => {
   
 
   return (
-    <div className='flex w-full h-auto bg-slate-200 flex-col'>
+    <div className='flex w-full min-h-screen bg-slate-200 flex-col'>
       <h1 className='font-extrabold text-3xl pt-5 justify-start ml-3'>Your Cards</h1>
       <div className='flex justify-center'>
         <Link to="/requestCard" className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full border-2 border-white shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out mt-5">Request Card</Link>
