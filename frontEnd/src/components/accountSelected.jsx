@@ -12,7 +12,7 @@ const AccountSelected = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/api/clients/accounts/${accountId}`, {
+      .get(`https://homebank1ngg.onrender.com/api/clients/accounts/${accountId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

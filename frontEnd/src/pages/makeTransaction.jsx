@@ -22,7 +22,7 @@ const MakeTransaction = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios.post('http://localhost:8080/api/transactions', formData, {
+    axios.post('https://homebank1ngg.onrender.com/api/transactions', formData, {
       headers: {
         Authorization: 'Bearer ' + token
       }

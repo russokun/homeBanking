@@ -24,7 +24,7 @@ const Loans = () => {
   // Obtención de los datos
   useEffect(() => {
     if (token) {
-      axios.get('http://localhost:8080/api/auth/current', {
+      axios.get('https://homebank1ngg.onrender.com/api/auth/current', {
         headers: {
           Authorization: 'Bearer ' + token
         }

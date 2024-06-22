@@ -18,7 +18,7 @@ const Register = () => {
 
     // Realizar registro del usuario con axios
     try {
-      const response = await axios.post('http://localhost:8080/api/auth/signup', user);
+      const response = await axios.post('https://homebank1ngg.onrender.com/api/auth/signup', user);
       if (response.status === 201) {
         alert('user registered successfully');
       }

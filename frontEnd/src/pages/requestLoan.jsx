@@ -16,7 +16,7 @@ const RequestLoan = () => {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/clients/current/accounts', {
+        const response = await axios.get('https://homebank1ngg.onrender.com/api/clients/current/accounts', {
             headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -30,7 +30,7 @@ const RequestLoan = () => {
 
     const fetchLoans = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/loans', {
+        const response = await axios.get('https://homebank1ngg.onrender.com/api/loans', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -71,7 +71,7 @@ const RequestLoan = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:8080/api/loans', data, {
+      const response = await axios.post('https://homebank1ngg.onrender.com/api/loans', data, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

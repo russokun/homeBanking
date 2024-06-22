@@ -32,7 +32,7 @@ const Accounts = () => {
   const requestNewAccount = async () => {
     try {
       // Asume que tienes una URL de API y un token válido
-      const response = await axios.post('http://localhost:8080/api/clients/current/accounts', {}, {
+      const response = await axios.post('https://homebank1ngg.onrender.com/api/clients/current/accounts', {}, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
