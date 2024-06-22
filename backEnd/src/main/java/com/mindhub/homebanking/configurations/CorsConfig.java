@@ -19,7 +19,7 @@ public class CorsConfig {
   @Bean //para ponerla en contexto de spring
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://localhost:5173"));//rutas que pueden acceder a los recursos
+    configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://localhost:5173", "https://homebank1ngg.onrender.com"));//rutas que pueden acceder a los recursos
     configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));//metodos que pueden acceder a los recursos
     configuration.setAllowedHeaders(List.of("*"));//lista de headers que se pueden usar en las peticiones
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
