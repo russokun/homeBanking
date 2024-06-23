@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import GivvinLoan from '../assets/images/loan.png';
 
 const RequestLoan = () => {
   const [loanId, setLoanType] = useState('');
@@ -87,7 +88,7 @@ const RequestLoan = () => {
 
   function verifyForm(){
     let error = ""
-    if (loanId == '' || loanAmount == '' || installments == '' || destinationAccountNumber == ''){
+    if (loanId == 'SELECT AN OPTION'|| installments == 'SELECT AN OPTION' || destinationAccountNumber == 'SELECT AN OPTION'){
       error = "Please valid fields to continue."
     }
     if (loanAmount <= 0){
@@ -105,14 +106,14 @@ const RequestLoan = () => {
         <div className="flex flex-col w-full md:w-1/2 md:flex md:items-center">
           <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-md w-full border-2 border-gray-300">
             <select id="loanId" value={loanId} onChange={(e) => setLoanType(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4">
-            <option value="">SELECT AN OPTION</option>
+            <option value="SELECT AN OPTION">SELECT AN OPTION</option>
               {loans.map(loan => (
                 <option key={loan.id} value={loan.id}>{loan.name} ({loan.id})</option>
               ))}
             </select>
             {verifyForm() && <p className="text-red-500 text-xs italic">{verifyForm()}</p>}
             <select id="destinationAccountNumber" value={destinationAccountNumber} onChange={(e) => setDestinationAccount(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4">
-            <option value="">SELECT AN OPTION</option>
+            <option value="SELECT AN OPTION">SELECT AN OPTION</option>
               {accounts.map(account => (
                 <option key={account.id} value={account.number}>{account.number}</option>
               ))}
@@ -121,7 +122,7 @@ const RequestLoan = () => {
             <input type="number" id="loanAmount" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4" placeholder="Loan Amount"/>
             {error.ammount && <p className="text-red-500 text-xs italic">{error.ammount}</p>}
             <select id="installments" value={installments} onChange={(e) => setInstallments(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4">
-            <option value="">SELECT AN OPTION</option>
+            <option value="SELECT AN OPTION">SELECT AN OPTION</option>
               {payments.map(paymentOption => (
                 <option key={paymentOption} value={paymentOption}>{paymentOption}</option>
               ))}
@@ -133,7 +134,7 @@ const RequestLoan = () => {
           </form>
         </div>
         
-          <img src="/src/assets/images/loan.png" alt="Making a transaction." className="sm:size-auto md:size-80 rounded-lg" />
+          <img src={GivvinLoan} alt="Giving a Loan." className="sm:size-auto md:size-80 rounded-lg" />
         
       </div>
     </div>

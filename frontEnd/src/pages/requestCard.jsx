@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import ApplyCard from '../assets/images/applyCard.png';
 
 const RequestCard = () => {
   const [cardType, setCardType] = useState('');
@@ -64,7 +65,7 @@ const RequestCard = () => {
           </button>
         </form>
         <div className="w-full lg:w-1/2 flex items-center justify-center">
-          <img src="/src/assets/images/applyCard.png" alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
+          <img src={ApplyCard} alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
         </div>
       </div>
     </div>
