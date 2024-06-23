@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header className='w-full h-[10vh] flex flex-col bg-[#0F2A71]'>
       <div className='flex justify-between mb-2'>
-        <img src="/src/assets/img/logo.png" className='w-16 sm:w-24   rounded-lg' alt="Logo" />
+        <img src="/dist/assets/img/logo.png" className='w-16 sm:w-24   rounded-lg' alt="Logo" />
         <h1 className='pl-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold pt-5 justify-start  text-white'>MINDHUB BROTHERS BANK</h1>
         
         <Button className='h-14 bg-blue-600 py-2' onClick={() => setIsOpen(true)}>Menu</Button>

@@ -79,7 +79,7 @@ const MakeTransaction = () => {
               placeholder="Destination Account Number"
               className="text-xl font-bold mb-4"
             />
-            <button type="submit" className="text-xl font-bold mb-4 bg-green-500 rounded-xl w-40">Sumbit</button>
+            <button type="submit" className="text-xl font-bold mb-4 bg-green-500 rounded-xl w-40 hover:bg-blue-600">Sumbit</button>
           </div>
         </form>
       </div>

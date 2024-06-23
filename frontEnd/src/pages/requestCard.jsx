@@ -56,7 +56,7 @@ const RequestCard = () => {
           </button>
         </form>
         <div className="w-full lg:w-1/2 flex items-center justify-center">
-          <img src="/src/assets/img/applyCard.png" alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
+          <img src="/dist/assets/img/applyCard.png" alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
         </div>
       </div>
     </div>

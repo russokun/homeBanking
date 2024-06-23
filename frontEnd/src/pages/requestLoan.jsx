@@ -121,7 +121,7 @@ const RequestLoan = () => {
           </form>
         </div>
         
-          <img src="/src/assets/img/loan.png" alt="Making a transaction." className="sm:size-auto md:size-80 rounded-lg" />
+          <img src="/dist/assets/img/loan.png" alt="Making a transaction." className="sm:size-auto md:size-80 rounded-lg" />
         
       </div>
     </div>
