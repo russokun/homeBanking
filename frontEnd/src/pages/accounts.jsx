@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Carousel from '../components/carousel';
+import Corousel from '../components/carousel';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -62,8 +62,8 @@ const Accounts = () => {
     <div className='flex justify-center'>
         <button onClick={requestNewAccount} className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full border-2 border-white shadow-lg hover:bg-blue-700 transition duration-300 ease-in-out mt-5">Request Account</button>
       </div>
-      <Carousel>
-      </Carousel>
+      <Corousel>
+      </Corousel>
     </div>
   );
 };
