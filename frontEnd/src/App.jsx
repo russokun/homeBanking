@@ -11,7 +11,7 @@ import RequestLoan from './pages/requestLoan';
 import RequestCard from './pages/requestCard';
 import Login from './pages/login';
 import Register from './pages/register';
-import Landing from './layouts/landing';
+import Landing from './layouts/Landing';
 import AccountSelected from './components/accountSelected';
 import AuthRoute from './components/HOCs/authRoute';
 import NoAuthRoute from './components/HOCs/noAuthRoute';
