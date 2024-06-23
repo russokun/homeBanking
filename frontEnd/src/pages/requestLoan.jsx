@@ -84,8 +84,20 @@ const RequestLoan = () => {
       console.error(error);
     }
   };
+
+  function verifyForm(){
+    let error = ""
+    if (loanId == '' || loanAmount == '' || installments == '' || destinationAccountNumber == ''){
+      error = "Please valid fields to continue."
+    }
+    if (loanAmount <= 0){
+      error.ammount = "The loan amount must be greater than 0."
+    }
+    return error
+  }
+  const error = verifyForm()
   console.log(destinationAccountNumber)
-    console.log(loanAmount, loanId, installments)
+  console.log(loanAmount, loanId, installments)
   return (
     <div className="bg-slate-200 flex flex-col items-center h-full md:h-[84vh] mx-auto md:px-6 lg:px-8">
       <h1 className="font-extrabold text-3xl pt-5 mb-5">Apply for a Loan</h1>
@@ -98,30 +110,30 @@ const RequestLoan = () => {
                 <option key={loan.id} value={loan.id}>{loan.name} ({loan.id})</option>
               ))}
             </select>
-
+            {verifyForm() && <p className="text-red-500 text-xs italic">{verifyForm()}</p>}
             <select id="destinationAccountNumber" value={destinationAccountNumber} onChange={(e) => setDestinationAccount(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4">
             <option value="">SELECT AN OPTION</option>
               {accounts.map(account => (
                 <option key={account.id} value={account.number}>{account.number}</option>
               ))}
             </select>
-
+            {verifyForm() && <p className="text-red-500 text-xs italic">{verifyForm()}</p>}
             <input type="number" id="loanAmount" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4" placeholder="Loan Amount"/>
-
+            {error.ammount && <p className="text-red-500 text-xs italic">{error.ammount}</p>}
             <select id="installments" value={installments} onChange={(e) => setInstallments(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4">
             <option value="">SELECT AN OPTION</option>
               {payments.map(paymentOption => (
                 <option key={paymentOption} value={paymentOption}>{paymentOption}</option>
               ))}
             </select>
-
+            {verifyForm() && <p className="text-red-500 text-xs italic">{verifyForm()}</p>}
             <button type="submit" className="bg-green-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
               Submit
             </button>
           </form>
         </div>
         
-          <img src="/dist/assets/img/loan.png" alt="Making a transaction." className="sm:size-auto md:size-80 rounded-lg" />
+          <img src="/src/assets/images/loan.png" alt="Making a transaction." className="sm:size-auto md:size-80 rounded-lg" />
         
       </div>
     </div>

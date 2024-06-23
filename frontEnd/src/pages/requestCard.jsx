@@ -29,6 +29,14 @@ const RequestCard = () => {
     }
   };
 
+  function verifyForm(){
+    let error = ""
+    if (cardType == '' || cardColor == ''){
+      error = "Please valid fields to continue."
+    }
+    
+  }
+
   return (
     <div className="bg-gray-100 flex flex-col items-center justify-center h-[84vh]">
       <div className="text-center mb-6">
@@ -42,7 +50,7 @@ const RequestCard = () => {
             <option value="DEBIT">DEBIT</option>
             <option value="CREDIT">CREDIT</option>
           </select>
-
+          {verifyForm() && <p className="text-red-500 text-xs italic">{verifyForm()}</p>}
           <label htmlFor="card-color" className="block text-gray-700 text-sm font-bold mb-2">Select Card Color:</label>
           <select id="card-color" value={cardColor} onChange={(e) => setCardColor(e.target.value)} className="block appearance-none w-full bg-white border border-gray-300 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline mb-4">
           <option value="">SELECT AN OPTION</option>
@@ -50,13 +58,13 @@ const RequestCard = () => {
             <option value="GOLD">GOLD</option>
             <option value="TITANIUM">TITANIUM</option>
           </select>
-
+          {verifyForm() && <p className="text-red-500 text-xs italic">{verifyForm()}</p>}
           <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Submit
           </button>
         </form>
         <div className="w-full lg:w-1/2 flex items-center justify-center">
-          <img src="/dist/assets/img/applyCard.png" alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
+          <img src="/src/assets/images/applyCard.png" alt="Apply Card" className="max-w-full max-h-full rounded-lg"/>
         </div>
       </div>
     </div>
